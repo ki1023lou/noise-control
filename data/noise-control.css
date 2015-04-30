@@ -1,6 +1,6 @@
 svg[anonid="noise-indicator"] {
 	display: -moz-box !important;
-	margin-top: 2px;
+	margin-top: 1px;
 	-moz-margin-start: 4px !important;
 	-moz-margin-end: -4px !important;
 	pointer-events: auto;
@@ -21,8 +21,8 @@ svg[anonid="noise-indicator"] > use {
 	fill: currentcolor;
 }
 svg[anonid="noise-indicator"].muted > use {
-	transform: translate(0, -16px);
+	transform: translate(0, -64px);
 }
 svg[anonid="noise-indicator"].plugins > use {
-	transform: translate(0, -32px);
+	transform: translate(0, -80px);
 }

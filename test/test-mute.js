@@ -46,8 +46,7 @@ exports.testPauseWhileMuted = function*(test) {
 
 	yield wait();
 
-	doClick(indicator);
-	yield wait();
+	yield doMouseDown(indicator);
 	test.equal(indicator.classList.contains("muted"), true);
 	test.equal(indicator.classList.contains("noisy"), true);
 	test.equal(indicatorStyle.visibility, "visible", "indicator not hidden");
@@ -89,8 +88,7 @@ exports.testPauseWhileMuted2 = function*(test) {
 	test.equal(indicator.classList.contains("noisy"), true);
 	test.equal(indicatorStyle.visibility, "visible", "indicator not hidden");
 
-	doClick(indicator);
-	yield wait();
+	yield doMouseDown(indicator);
 	test.equal(indicator.classList.contains("muted"), true);
 	test.equal(indicator.classList.contains("noisy"), true);
 	test.equal(indicatorStyle.visibility, "visible", "indicator not hidden");
@@ -140,22 +138,19 @@ function basicTest(tab, elementSelector, test) {
 		let video = elementSelector(contentDocument);
 
 		test.equal(video.muted, false);
-		doClick(indicator);
-		yield wait();
+		yield doMouseDown(indicator);
 		test.equal(indicator.classList.contains("muted"), true);
 		test.equal(indicator.classList.contains("noisy"), true);
 		test.equal(indicatorStyle.visibility, "visible", "indicator not hidden");
 		test.equal(video.muted, true);
 
-		doClick(indicator);
-		yield wait();
+		yield doMouseDown(indicator);
 		test.equal(indicator.classList.contains("muted"), false);
 		test.equal(indicator.classList.contains("noisy"), true);
 		test.equal(indicatorStyle.visibility, "visible", "indicator not hidden");
 		test.equal(video.muted, false);
 
-		doClick(indicator);
-		yield wait();
+		yield doMouseDown(indicator);
 		video.muted = false;
 		yield wait();
 		test.equal(indicator.classList.contains("muted"), false);
@@ -166,7 +161,8 @@ function basicTest(tab, elementSelector, test) {
 	});
 }
 
-function doClick(indicator) {
+function* doMouseDown(indicator) {
 	let event = new indicator.ownerDocument.defaultView.MouseEvent("mousedown", { button: 0, detail: 1 });
 	indicator.dispatchEvent(event);
+	yield wait();
 }
