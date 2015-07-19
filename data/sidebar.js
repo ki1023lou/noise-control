@@ -1,22 +1,19 @@
 /* globals addon */
 let windowsList = document.getElementById("windows");
+let tabTemplate = document.getElementById("tab").content;
 
 addon.port.on("everything", function(windows) {
-	let muteLabel = " " + document.getElementById("mutelabel").textContent;
+	tabTemplate.querySelector("span.mutelabel").textContent =
+			" " + document.getElementById("mutelabel").textContent;
 
 	windowsList.innerHTML = "";
 	for (let tabs of windows) {
 		let windowItem = document.createElement("li");
 		let tabsList = document.createElement("ul");
 		for (let tab of tabs) {
-			let listItem = document.createElement("li");
+			let listItem = tabTemplate.cloneNode(true).firstElementChild;
 			listItem.setAttribute("id", tab.id);
-			listItem.innerHTML =
-				'<div class="tabicon"><img src="defaultFavicon.png" /></div>' +
-				'<div class="tabtitle">hexy.ogg</div>' +
-				'<div class="tabmute"><label><input type="checkbox" /><span class="mutelabel"></span></label></div>';
 			listItem.querySelector("input[type=\"checkbox\"]").onclick = onMuteClick;
-			listItem.querySelector("span.mutelabel").textContent = muteLabel;
 			updateTab(listItem, tab);
 			tabsList.appendChild(listItem);
 		}
